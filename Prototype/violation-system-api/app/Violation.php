@@ -16,9 +16,14 @@ class Violation extends Model
         'violation_type_id', 
         'user_id_number',
     ];
-    
+
     public function violationType()
     {
       return $this->hasOne('App\ViolationType');
+    }
+
+    public function user()
+    {
+      return $this->belongsTo('App\User', 'user_id_number');
     }
 }
