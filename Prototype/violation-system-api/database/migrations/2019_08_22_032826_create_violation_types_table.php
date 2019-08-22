@@ -15,6 +15,7 @@ class CreateViolationTypesTable extends Migration
     {
         Schema::create('violation_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('type', 10);
             $table->timestamps();
         });
     }
