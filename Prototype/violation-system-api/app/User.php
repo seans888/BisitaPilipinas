@@ -11,17 +11,17 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-     protected $primaryKey = 'id_number';
+      * The primary key associated with the table.
+      *
+      * @var string
+      */
+    protected $primaryKey = 'id_number';
     /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-     public $incrementing = false;
+      * Indicates if the IDs are auto-incrementing.
+      *
+      * @var bool
+      */
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -49,4 +49,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role(){
+
+      return $this->belongsTo('App\Role');
+
+    }
 }
