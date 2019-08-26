@@ -2,12 +2,12 @@ package com.apc.edu.ph.violationsystem;
 
 public class User {
     private int id;
-    private String name, email, gender;
+    private String name, email, role;
 
-    public User(int id, String name, String email, String gender) {
+    public User(int id, String name, String email, String role) {
         this.id = id;
         this.email = email;
-        this.gender = gender;
+        this.role = role;
         this.name = name;
     }
 
@@ -36,11 +36,11 @@ public class User {
     }
 
 
-    public String getGender() {
-        return gender;
+    public String getRole() {
+        return role;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

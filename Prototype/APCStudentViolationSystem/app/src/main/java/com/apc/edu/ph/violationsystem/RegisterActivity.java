@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editTextUsername, editTextEmail, editTextPassword;
-    RadioGroup radioGroupGender;
+    RadioGroup radioGrouprole;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        radioGroupGender = findViewById(R.id.radioGender);
+        radioGrouprole = findViewById(R.id.radioRole);
 
 
         findViewById(R.id.buttonRegister).setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = editTextEmail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        final String gender = ((RadioButton) findViewById(radioGroupGender.getCheckedRadioButtonId())).getText().toString();
+        final String role = ((RadioButton) findViewById(radioGrouprole.getCheckedRadioButtonId())).getText().toString();
 
         //first we will do the validations
         if (TextUtils.isEmpty(username)) {
@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         userJson.getInt("id"),
                                         userJson.getString("username"),
                                         userJson.getString("email"),
-                                        userJson.getString("gender")
+                                        userJson.getString("role")
                                 );
 
                                 //storing the user in shared preferences
@@ -149,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("username", username);
                 params.put("email", email);
                 params.put("password", password);
-                params.put("gender", gender);
+                params.put("role", role);
                 return params;
             }
         };

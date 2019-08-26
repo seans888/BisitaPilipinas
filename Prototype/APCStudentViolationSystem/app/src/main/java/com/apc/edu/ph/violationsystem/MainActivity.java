@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    TextView id,userName,userEmail,gender;
+    TextView id,userName,userEmail,role;
     Button btnLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             id = findViewById(R.id.textViewId);
             userName = findViewById(R.id.textViewUsername);
             userEmail = findViewById(R.id.textViewEmail);
-            gender = findViewById(R.id.textViewGender);
+            role = findViewById(R.id.textViewRole);
             btnLogout = findViewById(R.id.buttonLogout);
             User user = SharedPrefManager.getInstance(this).getUser();
 
             id.setText(String.valueOf(user.getId()));
             userEmail.setText(user.getEmail());
-            gender.setText(user.getGender());
+            role.setText(user.getRole());
             userName.setText(user.getName());
 
             btnLogout.setOnClickListener(this);
