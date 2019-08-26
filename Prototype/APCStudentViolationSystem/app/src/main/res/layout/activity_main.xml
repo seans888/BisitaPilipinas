@@ -9,12 +9,248 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
     <TextView
-        android:layout_width="220dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Welcome to APC Violation System"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp" />
+        android:text="Welcome to Profile"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Id"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/textViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="id"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Username"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/textViewUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="username"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Email"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="useremail"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Gender"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/textViewGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="gender"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="75dp"
+        android:text="Logout" />
 </LinearLayout>
+</LinearLayout>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp" />
+
+        <ImageButton
+            android:id="@+id/btn_CreateVio"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/createviolation"/>
+
+        <TextView
+            android:id="@+id/txt_CreateVio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Violation"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButtonSpacer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="?android:selectableItemBackground" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btn_ViewIssuedVios"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/viewviolation" />
+
+                <TextView
+                    android:id="@+id/txt_ViewIssuedVios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Issued Violations"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonSpacer2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="?android:selectableItemBackground" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btn_ViewAllVios"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/viewviolation" />
+
+                <TextView
+                    android:id="@+id/txt_ViewAllVios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View All Violations"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonSpacer3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="?android:selectableItemBackground" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_ViewArchivedVios"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/archiveviolation" />
+
+        <TextView
+            android:id="@+id/txt_ViewArchivedVios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Archived Violations"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#aaa"
+            android:text="Logout"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    -->

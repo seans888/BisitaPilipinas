@@ -4,78 +4,102 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import java.util.HashMap;
-import java.util.Map;
-import android.text.TextUtils;
-import android.widget.ProgressBar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
-    EditText etName, etPassword;
+public class RegisterActivity extends AppCompatActivity {
+    EditText editTextUsername, editTextEmail, editTextPassword;
+    RadioGroup radioGroupGender;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
+        progressBar = findViewById(R.id.progressBar);
 
+        //if the user is already logged in we will directly start the MainActivity (profile) activity
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
+            return;
         }
 
-        progressBar = findViewById(R.id.progressBar);
-        etName = findViewById(R.id.etUserName);
-        etPassword = findViewById(R.id.etUserPassword);
+        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        radioGroupGender = findViewById(R.id.radioGender);
 
 
-
-        //calling the method userLogin() for login the user
-        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userLogin();
+                //if user pressed on button register
+                //here we will register the user to server
+                registerUser();
             }
         });
 
-        //if user presses on textview not register calling RegisterActivity
-        findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.textViewLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if user pressed on textview that already register open LoginActivity
                 finish();
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
+
     }
 
-    private void userLogin() {
-        //first getting the values
-        final String username = etName.getText().toString();
-        final String password = etPassword.getText().toString();
-        //validating inputs
+    private void registerUser() {
+        final String username = editTextUsername.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
+
+        final String gender = ((RadioButton) findViewById(radioGroupGender.getCheckedRadioButtonId())).getText().toString();
+
+        //first we will do the validations
         if (TextUtils.isEmpty(username)) {
-            etName.setError("Please enter your username");
-            etName.requestFocus();
+            editTextUsername.setError("Please enter username");
+            editTextUsername.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(email)) {
+            editTextEmail.setError("Please enter your email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Enter a valid email");
+            editTextEmail.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Please enter your password");
-            etPassword.requestFocus();
+            editTextPassword.setError("Enter a password");
+            editTextPassword.requestFocus();
             return;
         }
 
-        //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -84,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             //converting response to json object
                             JSONObject obj = new JSONObject(response);
-
                             //if no error in response
                             if (!obj.getBoolean("error")) {
                                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
@@ -102,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 //storing the user in shared preferences
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
                                 //starting the profile activity
                                 finish();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -117,15 +141,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
                     }
-                })
-        {
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", username);
+                params.put("email", email);
                 params.put("password", password);
+                params.put("gender", gender);
                 return params;
             }
         };
