@@ -16,7 +16,7 @@ class CreateViolationsTable extends Migration
         Schema::create('violations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('user_id_number', 11)->index()->nullable();
-            $table->integer('violation_type_id')->index()->nullable();
+            $table->integer('violation_type_id')->index();
             $table->string('violation_name', 45);
             $table->timestamps();
         });
