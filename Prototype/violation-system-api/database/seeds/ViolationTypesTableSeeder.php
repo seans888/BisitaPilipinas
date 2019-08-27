@@ -11,6 +11,13 @@ class ViolationTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+      DB::table('violation_types')->insert([
+        [
+          'type' => 'minor',
+        ],
+        [
+          'type' => 'major',
+        ],
+      ]);
     }
 }
