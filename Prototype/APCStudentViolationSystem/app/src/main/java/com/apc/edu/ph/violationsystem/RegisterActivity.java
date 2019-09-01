@@ -34,10 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         progressBar = findViewById(R.id.progressBar);
 
-        //if the user is already logged in we will directly start the MainActivity (profile) activity
+        //if the user is already logged in we will directly start the MainActivityDO (profile) activity
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, MainActivityDO.class));
             return;
         }
 
@@ -128,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 //starting the profile activity
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), MainActivityDO.class));
                             } else {
                                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                             }
