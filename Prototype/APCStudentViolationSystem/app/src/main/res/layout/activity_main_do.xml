@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".MainActivityDO">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -136,7 +136,7 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical"
         android:gravity="center"
-        tools:context=".MainActivity">
+        tools:context=".MainActivityDO">
 
         <TextView
             android:id="@+id/welcomeText"
