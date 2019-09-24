@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <title>Asia Pacific College - Violation System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .flex-container {
+            display: flex;
+            flex-wrap: nowrap;
+            width: 50%; margin-right: auto;
+            background-color: white; margin-left: auto;
+        }
+        
+        .flex-container1 {
+            display: flex;
+            flex-wrap: nowrap;
+            width: 50%; margin-right: auto;
+            background-color: white; margin-left: auto;
+        }
+
+        .flex-container > div {
+            background-color: white;
+            width: 100%;
+            margin: 20px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 30px;
+        }
+        
+        .flex-container1 > div {
+            background-color: white;
+            width: 100%;
+            margin: 20px;
+            text-align: center;
+            line-height: 15px;
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        a{
+            text-decoration: none; font-family: Arial, Helvetica, sans-serif;
+            color: black;
+        }
+    </style>
+    <body style="background-image: url(pictures/bg.png); background-repeat: no-repeat;
+    background-size: 100% 100vh;">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <div class="flex-container">
+            <div><a href="createvio.html"><img src="pictures/create.png" style='width: 80%; height: 80%'></a></div>
+            <div><a href="dissued.jsp"><img src="pictures/issued.png" style='width: 80%; height: 80%'></a></div>
+            <div><a href="dallrecords.jsp"><img src="pictures/allreports.png" style='width: 80%; height: 80%'></a></div>  
+            <div><a href="index.html"><img src="pictures/out.png" style='width: 80%; height: 80%'></a></div>
+        </div>
+        <div class="flex-container1">
+            <div><a href="createvio.html"><b>Create Violation Report</b></a></div>
+            <div><a href="dissued.jsp"><b>View all issued Violation Report</b></a></div>
+            <div><a href="dallrecords.jsp"><b>View all Violation Records</b></a></div>  
+            <div><a href="index.html"><b>Logout</b></a></div>
+        </div>
+    </body>
+</html>
