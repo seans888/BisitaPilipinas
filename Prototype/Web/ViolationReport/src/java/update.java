@@ -17,8 +17,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 
-
+/**
+ *
+ * @author macel
+ */
 @WebServlet(urlPatterns = {"/update"})
 public class update extends HttpServlet {
 
@@ -35,41 +39,25 @@ public class update extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            String stud_id = request.getParameter("sid");
-            String vio_studname = request.getParameter("sname");
-            String vio_studcourse = request.getParameter("scourse");
+            try {
             String vio_nature = request.getParameter("violation");
             String vio_comment = request.getParameter("comment");
             String admin_id = request.getParameter("aid");
             String vio_date = request.getParameter("date");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
             java.util.Date dateStr = formatter.parse(vio_date);
-            java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
+            java.sql.Timestamp dateDB = new java.sql.Timestamp(dateStr.getTime());
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-            PreparedStatement pst1 = conn.prepareStatement("Select vio_id from violation where vio_studname=? and vio_date=?");
-            pst1.setString(1, vio_studname);
-            pst1.setDate(2, dateDB);
-            ResultSet rs = pst1.executeQuery();
-            if(rs.next()){
-                String id = rs.getString("vio_id");
-                PreparedStatement pst2 = conn.prepareStatement("Update violation set vio_id=?, stud_id=?, vio_studname=?, vio_studcourse=?, "
-                    + "vio_nature=?, vio_comment=?, admin_id=?, vio_date=?where vio_studname=?");
-                pst2.setString(1, id);
-                pst2.setString(2, stud_id);
-                pst2.setString(3, vio_studname);
-                pst2.setString(4, vio_studcourse);
-                pst2.setString(5, vio_nature);
-                pst2.setString(6, vio_comment);
-                pst2.setString(7, admin_id);
-                pst2.setDate(8, dateDB);
-                pst2.setString(9, vio_studname);
-                pst2.executeUpdate();
-                RequestDispatcher rd = request.getRequestDispatcher("dallrecords.jsp");
+            PreparedStatement pst1 = conn.prepareStatement("Update violation set vio_nature=?, vio_comment=? where vio_date=? and vio_issuer=?");
+                pst1.setString(1, vio_nature);
+                pst1.setString(2, vio_comment);
+                pst1.setTimestamp(3, dateDB);
+                pst1.setString(4, admin_id);
+                pst1.executeUpdate();
+                RequestDispatcher rd = request.getRequestDispatcher("doMain.jsp");
                 rd.include(request, response);
-            }     
         }catch(Exception e){
             out.println(e);
         }

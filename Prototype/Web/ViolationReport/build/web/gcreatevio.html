@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <title>Asia Pacific College - Violation System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .center{
+            display: block; margin-left: auto; margin-right: auto;
+            width: 80%; font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .text{
+            display: block; margin-left: auto; margin-right: auto;
+            width: 10%; font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input[type=text], input[type=date], textarea{
+            width: 100%; padding: 12px 20px; margin: 0px 0;
+            display: block; border: 1px solid #ffbd59;
+            border-radius: 4px; box-sizing: border-box; margin-left: auto; 
+            margin-right: auto;
+        }
+        input[type=submit]{
+            width: 40%; background-color: #1b4f72; color: white;
+            padding: 10px 15px; border: none; margin: 0px 0;
+            border-radius: 4px; cursor: pointer; margin-left: auto; 
+            margin-right: auto; display: block;
+        }
+        input[type=submit]:hover{
+            background-color: #0d2b40;
+        }
+        form{
+            padding: 5px; width: 23%; display: block; margin-left: auto; 
+            margin-right: auto;
+        }
+    </style>
+    <body style="background-image: url(pictures/bg.png); background-repeat: no-repeat;
+    background-size: 100% 100vh;">
+        <br/><br/><br/>
+        <form action="gviolation">
+            <label class="center"><b>Create Violation Report</b></label><br/>
+            <input type="text" id="sid" name="sid"
+                   placeholder="Student id" required><br/>
+            <input type="text" id="sname" name="sname"
+                   placeholder="Student name (optional)"><br/>
+            <input type="text" id="scourse" name="scourse"
+                   placeholder="Course & Section (optional)"><br/>
+            <input type="text" id="violation" name="violation"
+                   placeholder="Nature of Violation (ex. dress code)" required><br/>
+            <textarea id="comment" name="comment" placeholder="Comment (Optional)"></textarea><br/>
+            <input type="date" id="date" name="date" min="2019-09-16"><br/>
+            <input type="text" id="aid" name="aid"
+                   placeholder="Issuer id"><br/>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

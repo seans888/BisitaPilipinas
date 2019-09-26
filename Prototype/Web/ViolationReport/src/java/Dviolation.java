@@ -20,7 +20,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ *
+ * @author macel
+ */
 @WebServlet(urlPatterns = {"/dviolation"})
 public class Dviolation extends HttpServlet {
 
@@ -44,7 +47,7 @@ public class Dviolation extends HttpServlet {
             String vio_nature = request.getParameter("violation");
             String vio_comment = request.getParameter("comment");
             String admin_id = request.getParameter("aid");
-            String vio_date = request.getParameter("date");
+            java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
             /*String username = "admin";
             String password = "admin123";
             String smessage = "You have a violation! Here is your violation details: \n" +
@@ -59,57 +62,11 @@ public class Dviolation extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-            if (stud_name.isEmpty()){
-                if (stud_course.isEmpty()){
-                    PreparedStatement pst1 = conn.prepareStatement("Select stud_name, stud_course, stud_contactnum,"
-                            + "stud_guardian_contactnum from student where stud_id=?");
-                    pst1.setString(1, stud_id);
-                    ResultSet rs = pst1.executeQuery();
-                    if(rs.next()){
-                        String stud_name1 = rs.getString("stud_name");
-                        request.setAttribute(stud_name ,stud_name);
-                        String stud_course1 = rs.getString("stud_course");
-                        request.setAttribute(stud_course ,stud_course);
-                        String stud_contactnum = rs.getString("stud_contactnum");
-                        String stud_guardian_contactnum = rs.getString("stud_guardian_contactnum");
-                       /* String requestUrl = "http://127.0.0.1:9501/api?action=sendmessage&"
-                    + "username=" + URLEncoder.encode(username, "UTF-8") + 
-                    "&password=" + URLEncoder.encode(password, "UTF-8") +
-                    "&recipient=" + URLEncoder.encode(stud_contactnum, "UTF-8") +
-                    "&messagetype=SMS:TEXT" + 
-                    "&messagedata=" + URLEncoder.encode(smessage, "UTF-8") +
-                    "&originator=" + URLEncoder.encode("+441234567", "UTF-8") +
-                    "&serviceprovider=GSM7" + "&responseformat=html";
-                        URL url = new URL(requestUrl);
-                        HttpURLConnection uc = (HttpURLConnection)url.openConnection();
-                        out.println(requestUrl);*/
-                        PreparedStatement pst2 = conn.prepareStatement("Select vio_id from violation ORDER BY vio_id DESC LIMIT 1");
+            
+                PreparedStatement pst2 = conn.prepareStatement("Select vio_num from violation ORDER BY vio_num DESC LIMIT 1");
                         ResultSet rs1 = pst2.executeQuery();
                         if (rs1.next()){
-                            String vio_id = rs1.getString("vio_id");
-                            int id = Integer.parseInt(vio_id);
-                            id = id + 1;
-                            vio_id = Integer.toString(id);
-                            PreparedStatement pst3 = conn.prepareStatement("Insert into violation values (?,?,?,?,?,?,?,?)");
-                            pst3.setString(1, vio_id);
-                            pst3.setString(2, stud_id);
-                            pst3.setString(3, stud_name1);
-                            pst3.setString(4, stud_course1);
-                            pst3.setString(5, vio_nature);
-                            pst3.setString(6, vio_comment);
-                            pst3.setString(7, admin_id);
-                            pst3.setString(8, vio_date);
-                            pst3.executeUpdate();
-                            RequestDispatcher rd = request.getRequestDispatcher("dissued.html");
-                            rd.include(request, response);
-                        }
-                    }      
-                }
-            }else {
-                PreparedStatement pst2 = conn.prepareStatement("Select vio_id from violation ORDER BY vio_id DESC LIMIT 1");
-                        ResultSet rs1 = pst2.executeQuery();
-                        if (rs1.next()){
-                            String vio_id = rs1.getString("vio_id");
+                            String vio_id = rs1.getString("vio_num");
                             int id = Integer.parseInt(vio_id);
                             id = id + 1;
                             vio_id = Integer.toString(id);
@@ -119,13 +76,13 @@ public class Dviolation extends HttpServlet {
                             pst3.setString(3, stud_name);
                             pst3.setString(4, stud_course);
                             pst3.setString(5, vio_nature);
-                            pst3.setString(6, vio_comment);
-                            pst3.setString(7, admin_id);
-                            pst3.setString(8, vio_date);
+                            pst3.setString(6, vio_comment);   
+                            pst3.setTimestamp(7, date);
+                            pst3.setString(8, "2018-10010");
                             pst3.executeUpdate();
-                            RequestDispatcher rd = request.getRequestDispatcher("dissued.jsp");
+                            RequestDispatcher rd = request.getRequestDispatcher("doMain.jsp");
                             rd.include(request, response);
-                        }
+                        
             }
         }catch(Exception e){
             out.println(e);

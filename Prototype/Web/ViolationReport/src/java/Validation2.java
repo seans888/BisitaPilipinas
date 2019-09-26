@@ -6,12 +6,12 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import javax.servlet.RequestDispatcher;
+import java.util.Base64;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author macel
+ * @author jlsolomon
  */
-@WebServlet(urlPatterns = {"/delete"})
-public class delete extends HttpServlet {
+@WebServlet(urlPatterns = {"/validation2"})
+public class Validation2 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +34,34 @@ public class delete extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             String stud_id = request.getParameter("sid");
-            String vio_studname = request.getParameter("sname");
-            String vio_studcourse = request.getParameter("scourse");
-            String vio_nature = request.getParameter("violation");
-            String vio_comment = request.getParameter("comment");
-            String admin_id = request.getParameter("aid");
-            String vio_date = request.getParameter("date");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
-            java.util.Date dateStr = formatter.parse(vio_date);
-            java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
+            String vio_issuer = request.getParameter("aid");
+            String stud_name = "";
+            String stud_course = "";
+            Blob image;
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-            PreparedStatement pst1 = conn.prepareStatement("Select vio_id from violation where vio_studname=? and vio_date=?");
-            pst1.setString(1, vio_studname);
-            pst1.setDate(2, dateDB);
-            ResultSet rs = pst1.executeQuery();
-            if(rs.next()){
-                String id = rs.getString("vio_id");
-                PreparedStatement pst2 = conn.prepareStatement("Delete from violation where vio_id=? and vio_date=?");
-                pst2.setString(1, id);
-                pst2.setDate(2, dateDB);
-                pst2.executeUpdate();
-                RequestDispatcher rd = request.getRequestDispatcher("dallrecords.jsp");
-                rd.include(request, response);
-            }     
+            PreparedStatement pst = conn.prepareStatement("Select stud_name, stud_course, stud_photo from student where user_id=?");
+                    pst.setString(1, stud_id);
+                    ResultSet rs = pst.executeQuery();
+                    if(rs.next()){  
+                        stud_name = rs.getString("stud_name");
+                        stud_course = rs.getString("stud_course");
+                        byte[] imgData = rs.getBytes("stud_photo");
+                        request.setAttribute("aid", "2018-10010");
+                        request.setAttribute("id", stud_id);
+                        request.setAttribute("name", stud_name);
+                        request.setAttribute("course", stud_course);
+                        String encode = Base64.getEncoder().encodeToString(imgData);
+                        request.setAttribute("photo", encode);
+                        request.getRequestDispatcher("doMain2.jsp").forward(request, response);
+                    }
         }catch(Exception e){
             out.println(e);
         }

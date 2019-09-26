@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ *
+ * @author macel
+ */
 @WebServlet(urlPatterns = {"/login"})
 public class login extends HttpServlet {
 
@@ -35,49 +38,44 @@ public class login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String stud_username = request.getParameter("username");
-            String stud_password = request.getParameter("password");
-            String admin_username = request.getParameter("username");
-            String admin_password = request.getParameter("password");
-            String admin_role;
+            String user_username = request.getParameter("username");
+            String user_password = request.getParameter("password");
+            String user_role;
+            String user_id;
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-            PreparedStatement pst = conn.prepareStatement("Select stud_username, stud_password from student where stud_username=? and stud_password=?");
-            pst.setString(1, stud_username);
-            pst.setString(2, stud_password);
-            PreparedStatement psta = conn.prepareStatement("Select admin_username, admin_password, admin_role from admin where admin_username=? and admin_password=?");
-            psta.setString(1, admin_username);
-            psta.setString(2, admin_password);
+            PreparedStatement pst = conn.prepareStatement("Select user_username, user_password, user_role, user_id from user where user_username=? and user_password=?");
+            pst.setString(1, user_username);
+            pst.setString(2, user_password);
             ResultSet rs = pst.executeQuery();
-            ResultSet rsa = psta.executeQuery();
             if(rs.next()){
-                request.setAttribute("username", stud_username);
-                request.getRequestDispatcher("studentMain.jsp").forward(request, response);
-            }else if (rsa.next()) {
-                admin_role = rsa.getString("admin_role");
-                if (admin_role.equals("Disciplinary Officer")){
-                    RequestDispatcher rd = request.getRequestDispatcher("doMain.html");
-                    rd.include(request, response);
-                }if (admin_role.equals("Guidance Counselor")){
-                    RequestDispatcher rd = request.getRequestDispatcher("guidanceMain.html");
-                    rd.include(request, response);
-                }if (admin_role.equals("Guard")) {
-                    RequestDispatcher rd = request.getRequestDispatcher("guardMain.html");
-                    rd.include(request, response);
+                user_id = rs.getString("user_id");
+                user_role = rs.getString("user_role");
+                if (user_role.equals("Disciplinary Officer")){
+                    request.setAttribute("id", user_id);
+                    request.getRequestDispatcher("doMain.jsp").forward(request, response);
+                }if (user_role.equals("Guidance Counselor")){
+                    request.setAttribute("id", user_id);
+                    request.getRequestDispatcher("guidanceMain.jsp").forward(request, response);
+                }if (user_role.equals("Guard")) {
+                    request.setAttribute("id", user_id);
+                    request.getRequestDispatcher("guardMain.jsp").forward(request, response);
+                }if (user_role.equals("Student")) {
+                    request.setAttribute("id", user_id);
+                    request.getRequestDispatcher("studentMain.jsp").forward(request, response);
                 }
             }else {
-                out.println();
-                out.println();
-              //  out.println("Sorry username or password error");
-                RequestDispatcher rd = request.getRequestDispatcher("index.html");
-                rd.include(request, response);
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Username or password incorrect');");
+                out.println("location='index.html';");
+                out.println("</script>");
             }
         }catch(Exception e){
             out.println(e);
         }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
