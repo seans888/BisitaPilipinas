@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 
 /**
  *
@@ -40,27 +41,32 @@ public class update extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
             try {
-            String vio_nature = request.getParameter("violation");
-            String vio_comment = request.getParameter("comment");
-            String admin_id = request.getParameter("aid");
-            String vio_date = request.getParameter("date");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
-            java.util.Date dateStr = formatter.parse(vio_date);
-            java.sql.Timestamp dateDB = new java.sql.Timestamp(dateStr.getTime());
-            Class.forName("com.mysql.jdbc.Driver");
+            String vio_nature = request.getParameter("violation2");
+            String vio_comment = request.getParameter("comment2");
+            String vio_date = request.getParameter("date2");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date = (java.util.Date)formatter.parse(vio_date);
+            Timestamp timets = new Timestamp(date.getTime());
+            /*Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-            PreparedStatement pst1 = conn.prepareStatement("Update violation set vio_nature=?, vio_comment=? where vio_date=? and vio_issuer=?");
-                pst1.setString(1, vio_nature);
-                pst1.setString(2, vio_comment);
-                pst1.setTimestamp(3, dateDB);
-                pst1.setString(4, admin_id);
-                pst1.executeUpdate();
+            PreparedStatement pst1 = conn.prepareStatement("Select vio_num from violation where vio_date=?");
+            pst1.setTimestamp(1, timets);
+            ResultSet rs = pst1.executeQuery();
+            if(rs.next()){
+                String id = rs.getString("vio_num");
+                PreparedStatement pst2 = conn.prepareStatement("Update violation set vio_nature=?, vio_comment where vio_num=?");
+                pst2.setString(1, vio_nature);
+                pst2.setString(2, vio_comment);
+                pst2.setString(3, id);
+                pst2.executeUpdate();
                 RequestDispatcher rd = request.getRequestDispatcher("doMain.jsp");
                 rd.include(request, response);
+            }     */
+            
+            out.println(vio_comment);
         }catch(Exception e){
-            out.println(e);
-        }
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

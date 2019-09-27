@@ -177,6 +177,7 @@
                 String cmt = rs.getString("vio_comment");
                 String iid = rs.getString("vio_issuer");
                 String dt = rs.getString("vio_date");
+                String s = rs.getString("vio_status");
                 PreparedStatement pst2 = conn.prepareStatement("Select offense_level from offense where offense_desc=?");
                 pst2.setString(1, nv);
                 ResultSet rs2 = pst2.executeQuery();
@@ -191,6 +192,7 @@
                         + "<td>" + cmt + "</td>"
                         + "<td>" + dt + "</td>"
                         + "<td>" + iid + "</td>"
+                        + "<td>" + s + "</td>"    
                         + "</tr>");
                 }
                 }
@@ -204,10 +206,10 @@
         <hr>
         <div class="flex-container">
             <div style="text-align: right;"><form action="update">
-        Student id <input type="text" id="sid2" name="sid" disabled><br/>
-        Student name <input type="text" id="sname2" name="sname" disabled><br/>
-        Student course <input type="text" id="scourse2" name="scourse" disabled><br/>
-        Nature of violation<select id="violation2" name="violation">
+        Student id <input type="text" id="sid2" name="sid2" disabled><br/>
+        Student name <input type="text" id="sname2" name="sname2" disabled><br/>
+        Student course <input type="text" id="scourse2" name="scourse2" disabled><br/>
+        Nature of violation<select id="violation2" name="violation2">
                 <option value="" disabled selected>Nature of Violation</option>
                 <%
                     try{
@@ -224,17 +226,17 @@
             out.println(e);}
                     %>
             </select><br/>
-        Comment <textarea id="comment2" name="comment"></textarea><br/>
-        Date <input type="text" id="date2" name="date" disabled><br/>
-        Issuer id <input type="text" id="aid2" name="aid" disabled><br/><br/>
+        Comment <textarea id="comment2" name="comment2"></textarea><br/>
+        Date <input type="text" id="date2" name="date2" disabled><br/>
+        Issuer id <input type="text" id="aid2" name="aid2" disabled><br/><br/>
         <input type="submit" value="Update">
             </form></div>
             <div>
         <form action="delete">
-            Student id <input type="text" id="sid1" name="sid" disabled><br/>
-        Student name <input type="text" id="sname1" name="sname" disabled><br/>
-        Student course <input type="text" id="scourse1" name="scourse" disabled><br/>
-        Nature of violation<select id="violation1" name="violation" disabled>
+            Student id <input type="text" id="sid1" name="sid1" disabled><br/>
+        Student name <input type="text" id="sname1" name="sname1" disabled><br/>
+        Student course <input type="text" id="scourse1" name="scourse1" disabled><br/>
+        Nature of violation<select id="violation1" name="violation1" disabled>
                 <option value="" disabled selected>Nature of Violation</option>
                 <%
                     try{
@@ -251,9 +253,9 @@
             out.println(e);}
                     %>
             </select><br/>
-        Comment <textarea id="comment1" name="comment" disabled></textarea><br/>
-        Date <input type="text" id="date1" name="date" disabled><br/>
-        Issuer id <input type="text" id="aid1" name="aid" disabled><br/><br/>
+        Comment <textarea id="comment1" name="comment1" disabled></textarea><br/>
+        Date <input type="text" id="date1" name="date1" disabled><br/>
+        Issuer id <input type="text" id="aid1" name="aid1" disabled><br/><br/>
         <input type="submit" value="Delete">
         </form></div></div>
         <div class="row">
@@ -290,6 +292,8 @@
                          document.getElementById("aid1").value = this.cells[6].innerHTML;
                     };
                 }
+            
+           
         </script>
     </body>
 </html>

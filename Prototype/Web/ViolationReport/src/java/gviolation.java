@@ -46,6 +46,7 @@ public class gviolation extends HttpServlet {
             String vio_nature = request.getParameter("violation");
             String vio_comment = request.getParameter("comment");
             String admin_id = request.getParameter("aid");
+            String status = "";
             java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
             /*String username = "admin";
             String password = "admin123";
@@ -69,7 +70,7 @@ public class gviolation extends HttpServlet {
                             int id = Integer.parseInt(vio_id);
                             id = id + 1;
                             vio_id = Integer.toString(id);
-                            PreparedStatement pst3 = conn.prepareStatement("Insert into violation values (?,?,?,?,?,?,?,?)");
+                            PreparedStatement pst3 = conn.prepareStatement("Insert into violation values (?,?,?,?,?,?,?,?,?)");
                             pst3.setString(1, vio_id);
                             pst3.setString(2, stud_id);
                             pst3.setString(3, stud_name);
@@ -78,6 +79,7 @@ public class gviolation extends HttpServlet {
                             pst3.setString(6, vio_comment);   
                             pst3.setTimestamp(7, date);
                             pst3.setString(8, "2007-40014");
+                            pst3.setString(9, status);
                             pst3.executeUpdate();
                             RequestDispatcher rd = request.getRequestDispatcher("guardMain.jsp");
                             rd.include(request, response);
