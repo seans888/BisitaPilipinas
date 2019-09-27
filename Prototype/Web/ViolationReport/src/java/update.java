@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.util.Date;
 
 /**
  *
@@ -44,27 +45,45 @@ public class update extends HttpServlet {
             String vio_nature = request.getParameter("violation2");
             String vio_comment = request.getParameter("comment2");
             String vio_date = request.getParameter("date2");
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = (java.util.Date)formatter.parse(vio_date);
-            Timestamp timets = new Timestamp(date.getTime());
-            /*Class.forName("com.mysql.jdbc.Driver");
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            Date date = inputFormat.parse(vio_date);
+
+            DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String outputString = outputFormat.format(date);
+            //DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            //java.util.Date date = (java.util.Date)formatter.parse(vio_date);
+            //Timestamp timets = new Timestamp(date.getTime());
+            Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-            PreparedStatement pst1 = conn.prepareStatement("Select vio_num from violation where vio_date=?");
-            pst1.setTimestamp(1, timets);
+           /* PreparedStatement pst1 = conn.prepareStatement("Select vio_num from violation where vio_date=?");
+            pst1.setString(1, outputString);
             ResultSet rs = pst1.executeQuery();
+            RequestDispatcher rd = request.getRequestDispatcher("doMain.jsp");
+                rd.include(request, response);
             if(rs.next()){
-                String id = rs.getString("vio_num");
-                PreparedStatement pst2 = conn.prepareStatement("Update violation set vio_nature=?, vio_comment where vio_num=?");
+                String id = rs.getString("vio_num");*/
+                PreparedStatement pst2 = conn.prepareStatement("Update violation set vio_nature=?, vio_comment=? where vio_date=?");
                 pst2.setString(1, vio_nature);
                 pst2.setString(2, vio_comment);
-                pst2.setString(3, id);
+                pst2.setString(3, outputString);
                 pst2.executeUpdate();
-                RequestDispatcher rd = request.getRequestDispatcher("doMain.jsp");
-                rd.include(request, response);
-            }     */
-            
-            out.println(vio_comment);
+                RequestDispatcher rd1 = request.getRequestDispatcher("doMain.jsp");
+                rd1.include(request, response);
+          // }     
+            /*
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
+                "user=root&password=");
+            PreparedStatement pst1 = conn.prepareStatement("Select vio_date from violation where vio_nature=? and vio_comment=?");
+           pst1.setString(1, vio_nature);
+           pst1.setString(2, vio_comment);
+           ResultSet rs = pst1.executeQuery();
+            if(rs.next()){
+                String Date = rs.getString("vio_date");
+                String nv = rs.getString("vio_nature");
+                String c = rs.getString("vio_comment");
+            }*/
         }catch(Exception e){
     }
     }

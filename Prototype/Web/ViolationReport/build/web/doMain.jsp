@@ -1,5 +1,5 @@
 <%-- 
-    Document   : guardMain
+    Document   : doMain
     Created on : Sep 24, 2019, 7:23:13 PM
     Author     : jlsolomon
 --%>
@@ -213,7 +213,7 @@
                     %>
             </select><br/>
         Comment <textarea id="comment2" name="comment2"></textarea><br/>
-        Date <input type="text" id="date2" name="date2" disabled><br/>
+        Date <input type="text" id="date2" name="date2" readonly><br/>
         Issuer id <input type="text" id="aid2" name="aid2" disabled><br/><br/>
         <input type="submit" value="Update">
             </form></div>
@@ -240,7 +240,7 @@
                     %>
             </select><br/>
         Comment <textarea id="comment1" name="comment1" disabled></textarea><br/>
-        Date <input type="text" id="date1" name="date1" disabled><br/>
+        Date <input type="text" id="date1" name="date1" readonly><br/>
         Issuer id <input type="text" id="aid1" name="aid1" disabled><br/><br/>
         <input type="submit" value="Delete">
         </form></div></div>

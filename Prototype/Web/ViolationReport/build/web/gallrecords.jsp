@@ -1,7 +1,7 @@
 <%-- 
     Document   : gallrecords
     Created on : 09 17, 19, 12:19:26 AM
-    Author     : macel
+    Author     : jlsolomon
 --%>
 
 <%@page import="java.sql.ResultSet"%>

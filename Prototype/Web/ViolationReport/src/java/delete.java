@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,24 +49,25 @@ public class delete extends HttpServlet {
             String vio_comment = request.getParameter("comment1");
             String admin_id = request.getParameter("aid1");
             String vio_date = request.getParameter("date1");
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            java.util.Date date = (java.util.Date)formatter.parse(vio_date);
-            Timestamp timets = new Timestamp(date.getTime());
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            Date date = inputFormat.parse(vio_date);
+            DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String outputString = outputFormat.format(date);
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-             PreparedStatement pst1 = conn.prepareStatement("Select vio_num from violation where vio_date=?");
-            pst1.setTimestamp(1, timets);
+            //PreparedStatement pst1 = conn.prepareStatement("Select vio_num from violation where vio_date=?");
+           /* pst1.setTimestamp(1, timets);
             ResultSet rs = pst1.executeQuery();
             if(rs.next()){
-                String id = rs.getString("vio_num");
-                PreparedStatement pst2 = conn.prepareStatement("Update violation set vio_status=? where vio_num=?");
+                String id = rs.getString("vio_num");*/
+                PreparedStatement pst2 = conn.prepareStatement("Update violation set vio_status=? where vio_date=?");
                 pst2.setString(1, "Cancelled");
-                pst2.setString(2, id);
+                pst2.setString(2, outputString);
                 pst2.executeUpdate();
                 RequestDispatcher rd = request.getRequestDispatcher("doMain.jsp");
                 rd.include(request, response);
-            }     
+           // }     
         }catch(Exception e){
             out.println(e);
         }

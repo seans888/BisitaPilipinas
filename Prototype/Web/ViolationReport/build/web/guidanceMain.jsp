@@ -1,7 +1,7 @@
 <%-- 
-    Document   : allreports
-    Created on : 09 17, 19, 12:20:10 AM
-    Author     : macel
+    Document   : gallrecords
+    Created on : 09 17, 19, 12:19:26 AM
+    Author     : jlsolomon
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -14,7 +14,7 @@
     <title>Asia Pacific College - Violation System</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <style>
+    <style>
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -113,8 +113,7 @@
         <hr>
       
         <br/><br/>
- 
-        <table>
+       <table id="table">
             <tr>
                 <th>Student id</th>
                 <th>Student name</th>
@@ -128,20 +127,13 @@
             </tr>
         <% 
             try{
-                String id = request.getAttribute("id").toString();
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/apcviolationsystem?" +
                 "user=root&password=");
-                /*PreparedStatement pst1 = conn.prepareStatement("Select stud_id from student where stud_username=?");
-                pst1.setString(1, name);
-                ResultSet rs1 = pst1.executeQuery();
-                if (rs1.next()) {
-                    String id = rs1.getString("stud_id");*/
-                    PreparedStatement pst = conn.prepareStatement("Select user_id, vio_name, vio_course, vio_nature,"
-                            + "vio_comment, vio_issuer, vio_date, vio_status from violation where user_id=?");
-                pst.setString(1, id);
+                PreparedStatement pst = conn.prepareStatement("Select user_id, vio_name, vio_course, vio_nature,"
+                            + "vio_comment, vio_issuer, vio_date, vio_status from violation");
                 ResultSet rs = pst.executeQuery();
-                 while (rs.next()){
+                while (rs.next()){
                 String sid = rs.getString("user_id");
                 String nm = rs.getString("vio_name");
                 String crs = rs.getString("vio_course");
@@ -167,8 +159,7 @@
                         + "<td>" + s + "</td>"    
                         + "</tr>");
                 }
-               }
-                
+                }
             }catch(Exception e){
             out.println(e);
              }
@@ -182,5 +173,6 @@
             <div class="column">
                 <img src="pictures/apc.png" style="width: 100%; height: 10%"></div>
         </div>
+  
     </body>
 </html>
